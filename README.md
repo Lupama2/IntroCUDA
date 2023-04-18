@@ -31,12 +31,20 @@ por ejemplo con command = nvcc
 (2) Para ver los módulos disponibles
 module avail
 
+(2p) A veces no nos deja usar un módulo (nvcc por ejemplo). Para eso hay que cargar el módulo desde la terminal con
+module load cuda/11.4.0
+
+(2pp) Para correr el programa
+./programa
+estando en el directorio donde está el programa compilado
+
+
 (3) Dirección de la materia
 ls /share/apps/icnpg/clases/
 
 (4) Copiar contenido de una carpeta a otra, en el ejemplo el "." es nuestra carpeta.
 cp -r /share/apps/icnpg/clases/Cuda_Basico/ .
-
+El "-r" es porque la copia es recursiva
 (5) Para ir a otra carpeta
 cd carpeta/
 
