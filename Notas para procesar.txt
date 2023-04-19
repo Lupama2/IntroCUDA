@@ -1,0 +1,24 @@
+*Fechas de doctorado Conicet
+*Dudas sobre el laburo de Fabián
+. ¿Fabián paga a tiempo?
+. ¿Si desaparece, te sigue dando trabajo? En caso negativo, ¿cómo pagarías el alquiler?
+. ¿Encontraste alquiler por inmobiliaria o todo en negro?
+*Preguntarle a Fabián sobre algún proyecto paralelizable para CUDA. ¿Quizás replicar algún paper con dependencia espacial?
+
+Mandarle un mail a Pablo Cornaglia diciendole que queremos estar en FISCOM
+
+Hay que trabajar con una versión vieja de CUDA en el cluster
+
+Para verificar los drivers y las características de la placa sin necesidad de usar CUDA
+nvidia-msi
+
+MakeFile tutorial
+https://makefiletutorial.com/#getting-started
+
+En el código multmal_solucion se resuelve la cuenta usando una librería de CUDA
+Le podemos decir cuántas GPUs usar
+
+Dependiendo de la función que usemos nos va a pedir que las matrices estén cargadas en CPU o GPU
+
+ifdef significa que voy a compilar con opciones. Si defino un macro SIMPLECPU se va a compilar esa parte. De esta forma puedo tener muchos programas en un único programa
+Luego para correr cada parte hay que compilar con esas opciones ej: nvcc ... -SIMPLECPU -o ...
