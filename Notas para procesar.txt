@@ -22,3 +22,14 @@ Dependiendo de la función que usemos nos va a pedir que las matrices estén car
 
 ifdef significa que voy a compilar con opciones. Si defino un macro SIMPLECPU se va a compilar esa parte. De esta forma puedo tener muchos programas en un único programa
 Luego para correr cada parte hay que compilar con esas opciones ej: nvcc ... -SIMPLECPU -o ...
+
+
+COPIAR LOS GOOGLE COLABS DE LA MATERIA
+
+
+No hay que optimizar prematuramente. Podemos terminar con un código re optimizado de cosas que no eran necesario optimizar
+
+
+Profiling en python
+Podría agregar relojes manuales antes y después de cada función. O podría usar librerías que se encargan de hacer todo por mi. Le pregunté a ChatPGT y me comentó sobre las librerías cProfile y profile. Además, hay herramientas de visualización del profiling mejor interpretables que el texto completo.
+
