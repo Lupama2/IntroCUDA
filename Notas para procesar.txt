@@ -33,3 +33,4 @@ No hay que optimizar prematuramente. Podemos terminar con un código re optimiza
 Profiling en python
 Podría agregar relojes manuales antes y después de cada función. O podría usar librerías que se encargan de hacer todo por mi. Le pregunté a ChatPGT y me comentó sobre las librerías cProfile y profile. Además, hay herramientas de visualización del profiling mejor interpretables que el texto completo.
 
+ME QUEDARON DUDAS DE LA CLASE 5. ESTÁN EN EL POWER POINT
