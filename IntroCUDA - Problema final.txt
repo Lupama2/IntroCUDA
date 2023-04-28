@@ -1,0 +1,16 @@
+IntroCUDA - Problema
+Quiero determinar la dinámica de un plasma ante campo eléctrico y magnético. Me gustaría que el problema sea similar al de cavitación PERO que a su vez sea lo más simple posible como para evitar grandes problemas
+
+Evolución de un plasma magnetizado contenido en una esfera de frontera móvil
+
+Sea un plasma contenido en una esfera que sufre una presión externa p0 y una presión interna dada por la tensión superficial, ..., la presión del plasma y la presión magnética. Queremos utilizar las ecuaciones de MHD ideal para determinar cómo será el proceso de compresión y el efecto de distintos parámetros sobre la T máxima
+Estuve investigando. La parte numérica no es trivial de atacar. Había pensado en repetir las simulaciones de Akhatov, pero dada la cantidad de fórmulas podría terminar siendo un gran lío y trabajo. Tengo que encontrar algo más sencillo de hacer. Creo que va a ser más sencillo preguntarle a Fabián a hacer algo por mi cuenta.
+
+
+Se puede usar Julia para resolver el sistema pde
+https://pde-on-gpu.vaw.ethz.ch/lecture3/
+
+Barber 1994 hace cuenta de seccion eficaz
+Franco tiene un paper que es una versión mejorada de la sección eficaz de Navy
+
+Se
