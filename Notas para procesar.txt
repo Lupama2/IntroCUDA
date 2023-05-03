@@ -34,3 +34,49 @@ Profiling en python
 Podría agregar relojes manuales antes y después de cada función. O podría usar librerías que se encargan de hacer todo por mi. Le pregunté a ChatPGT y me comentó sobre las librerías cProfile y profile. Además, hay herramientas de visualización del profiling mejor interpretables que el texto completo.
 
 ME QUEDARON DUDAS DE LA CLASE 5. ESTÁN EN EL POWER POINT
+
+Intentar optimizar mi código de Python usando Numba
+
+Actividades:
+*Decargar todos los google colabs
+*Pasar comentarios a pdf clase 7
+*Comitear el github
+*Pasar preguntas ANKI
+*Hacer preguntas ANKI de las primeras clases
+
+
+Dentro de los kernels en Numba no se puede meter cualquier cosa porque corre en el device. Entonces no puedo pedir desde el kernel acceder a numpy porque no está en la GPU
+
+
+
+Clase 7:
+Q:
+¿Se pueden optimizar códigos de Python usando GPU?
+A:
+Sí! Se pueden aprovechar librerías como Cipy, Rapids, PyCUDA y Numba. Esta última tiene la particularidad de que tmb permite acelerar códigos que corren en CPU
+
+Q:
+¿Por qué los resultados pueden dar distintos en GPU vs CPU?
+A:
+La aproximación de floats es distinta en device y host
+
+Q:
+¿Es válido medir el tiempo de ejecución de un código en GPU a partir de una única corrida?
+A:
+No. Hay que hacer estadística de los tiempos de ejecución. Además, la primera vez tarda más por lo que es necesario hacer un "precalentamiento" que no debe ser considerado en el código
+
+Clase 6:
+
+Q:
+
+A:
+
+
+Clase 5:
+Q:
+¿Qué es thrust y cuál es la ventaja de emplearlo respecto a CUDA C directamente?
+A:
+Thrust es una librería para C++ de algoritmos en paralelo. Tiene la ventaja de ser portable y poder compilarse y ejecutarse en:
+*Serial en CPU
+*Paralelo en CPU
+*Paralelo en GPU
