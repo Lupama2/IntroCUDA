@@ -80,3 +80,26 @@ Thrust es una librería para C++ de algoritmos en paralelo. Tiene la ventaja de 
 *Serial en CPU
 *Paralelo en CPU
 *Paralelo en GPU
+
+
+Clase 8 o 9:
+
+
+Q: ¿Qué es OpenACC? ¿Sobre qué placas corre? ¿Para qué sirve?
+
+A:
+Hay que saber identificar el paralelismo
+
+Q: ¿Cuál es el problema de eficiencia que suele ocurrir con OpenAcc? ¿Cómo se puede solucionar?
+
+A: Hay un excesivo movimiento de datos por copias de GPU a CPU y visceversa. Las copias innecesarias pueden evitarse usando data regions. Estas definen regiones del código en las cuales los arrays de GPU se quedan en la GPU y son compartidos entre los kernels de la region. Solo salen de la GPU cuando sale de la región.
+
+Q: ¿Cuáles son las "Three rules of GPGPU Programming"? ¿Qué significa GPGPU?
+
+
+A: Observation has shown that there are three general rules to creating high-performance GPGPU programs:
+1. Get the data on the GPGPU and keep it there
+2. Give the GPGPU enough work to do
+3. Focus on data reuse within the GPGPU to avoid memory bandwidth limitations
+
+GPGPU significa General-Purpose computing on Graphics Processing Units
