@@ -103,3 +103,20 @@ A: Observation has shown that there are three general rules to creating high-per
 3. Focus on data reuse within the GPGPU to avoid memory bandwidth limitations
 
 GPGPU significa General-Purpose computing on Graphics Processing Units
+
+
+
+Cuando con CuPy hago el producto de una matriz definida como sparse con un vector denso, la librería se da cuenta que la matriz es sparse y usa el producto más eficiente
+
+Copiar los google colabs
+
+Ver cómo correr el proyecto de clases en el cluster
+
+
+Clase n:
+Q: ¿Se puede optimizar un producto matricial?
+
+A: Sí. Existen múltiples formas de hacerlo, ya se en GPU o CPU. Existen librerías de bajo y alto nivel que realizan tales operaciones de forma óptima, en base a las propiedades de las matrices (como si son sparse)
+-----
+Los productos matriciales aparecen en muchos modelos físicos, como en solución de ecuaciones en derivadas parciales, grafos, modelos de epidemias, etc.
+
