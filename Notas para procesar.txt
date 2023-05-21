@@ -45,3 +45,50 @@ Dentro de los kernels en Numba no se puede meter cualquier cosa porque corre en 
 
 
 
+
+
+
+Instrucciones del uso del cluster
+
+
+Para compilar
+nvcc archivo.cu -o nombre_ejecutable
+
+Para ejecutar
+./nombre_ejecutable
+
+Para hacer un JobGPU
+1ro estructura con prefijo de línea #$ que da directivas al cluster qué hacer
+2do ejecutar lo mismo que en la cmd: ./multmat
+3ro puedo decir que los datos los mande a un .dat usando "done < tiempos.dat" luego de un ;
+
+Tmb se puede configurar un jobGPU genérico que incluya solo el 1er paso y en el segundo paso poner solo la línea
+$1
+que tomará input del usuario en la cmd. Este tipo de jobs se ejecutan de la forma
+qsub jobGPU ./name_ejecutable
+habiendo antes compilado el .cu
+
+Me puede llegar a dar error si no tengo los módulos correctos instalados. Para cargar un módulo:
+module load name_modulo
+Para ver qué módulos hay disponibles
+module unload name_modulo
+Para eliminar un módulo
+module unload name_modulo
+
+A veces voy a tener errores como
+*warnings asociadas a Thrust
+La solución en estos casos suele ser usar la versión más vieja del mdoulo de cuda existente en el cluster
+
+Hay ocasiones donde tendré que indicarle al compilador que se linkee con una librería particular, por ejemplo si uso cublas, cusparse o cufft. En tal caso hay que añadir la instrucción
+-lname_library
+en la etapa de compilación (nvcc)
+
+qstat, qdel
+
+Admin: Gustavo Berman
+soporte.fisica@cab.cnea.gov.ar
+
+man bash_command
+ejemplo
+man qstat
+PROBAR
