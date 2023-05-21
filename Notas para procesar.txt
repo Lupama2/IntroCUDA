@@ -1,8 +1,4 @@
-*Fechas de doctorado Conicet
-*Dudas sobre el laburo de Fabián
-. ¿Fabián paga a tiempo?
-. ¿Si desaparece, te sigue dando trabajo? En caso negativo, ¿cómo pagarías el alquiler?
-. ¿Encontraste alquiler por inmobiliaria o todo en negro?
+
 *Preguntarle a Fabián sobre algún proyecto paralelizable para CUDA. ¿Quizás replicar algún paper con dependencia espacial?
 
 Mandarle un mail a Pablo Cornaglia diciendole que queremos estar en FISCOM
@@ -48,75 +44,4 @@ Actividades:
 Dentro de los kernels en Numba no se puede meter cualquier cosa porque corre en el device. Entonces no puedo pedir desde el kernel acceder a numpy porque no está en la GPU
 
 
-
-Clase 7:
-Q:
-¿Se pueden optimizar códigos de Python usando GPU?
-A:
-Sí! Se pueden aprovechar librerías como Cipy, Rapids, PyCUDA y Numba. Esta última tiene la particularidad de que tmb permite acelerar códigos que corren en CPU
-
-Q:
-¿Por qué los resultados pueden dar distintos en GPU vs CPU?
-A:
-La aproximación de floats es distinta en device y host
-
-Q:
-¿Es válido medir el tiempo de ejecución de un código en GPU a partir de una única corrida?
-A:
-No. Hay que hacer estadística de los tiempos de ejecución. Además, la primera vez tarda más por lo que es necesario hacer un "precalentamiento" que no debe ser considerado en el código
-
-Clase 6:
-
-Q:
-
-A:
-
-
-Clase 5:
-Q:
-¿Qué es thrust y cuál es la ventaja de emplearlo respecto a CUDA C directamente?
-A:
-Thrust es una librería para C++ de algoritmos en paralelo. Tiene la ventaja de ser portable y poder compilarse y ejecutarse en:
-*Serial en CPU
-*Paralelo en CPU
-*Paralelo en GPU
-
-
-Clase 8 o 9:
-
-
-Q: ¿Qué es OpenACC? ¿Sobre qué placas corre? ¿Para qué sirve?
-
-A:
-Hay que saber identificar el paralelismo
-
-Q: ¿Cuál es el problema de eficiencia que suele ocurrir con OpenAcc? ¿Cómo se puede solucionar?
-
-A: Hay un excesivo movimiento de datos por copias de GPU a CPU y visceversa. Las copias innecesarias pueden evitarse usando data regions. Estas definen regiones del código en las cuales los arrays de GPU se quedan en la GPU y son compartidos entre los kernels de la region. Solo salen de la GPU cuando sale de la región.
-
-Q: ¿Cuáles son las "Three rules of GPGPU Programming"? ¿Qué significa GPGPU?
-
-
-A: Observation has shown that there are three general rules to creating high-performance GPGPU programs:
-1. Get the data on the GPGPU and keep it there
-2. Give the GPGPU enough work to do
-3. Focus on data reuse within the GPGPU to avoid memory bandwidth limitations
-
-GPGPU significa General-Purpose computing on Graphics Processing Units
-
-
-
-Cuando con CuPy hago el producto de una matriz definida como sparse con un vector denso, la librería se da cuenta que la matriz es sparse y usa el producto más eficiente
-
-Copiar los google colabs
-
-Ver cómo correr el proyecto de clases en el cluster
-
-
-Clase n:
-Q: ¿Se puede optimizar un producto matricial?
-
-A: Sí. Existen múltiples formas de hacerlo, ya se en GPU o CPU. Existen librerías de bajo y alto nivel que realizan tales operaciones de forma óptima, en base a las propiedades de las matrices (como si son sparse)
------
-Los productos matriciales aparecen en muchos modelos físicos, como en solución de ecuaciones en derivadas parciales, grafos, modelos de epidemias, etc.
 
