@@ -92,3 +92,6 @@ man bash_command
 ejemplo
 man qstat
 PROBAR
+
+
+Usar make para compilar. Dentro creo que tiene las instrucciones extras que se le pasan al compilador para que corra sin problemas

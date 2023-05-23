@@ -258,3 +258,14 @@ Clase n+1:
 Q: ¿Cómo puedo resolver una ecuación diferencial que se puede separar en sus modos normales?
 
 A: Con transformada de Fourier! Se puede implementar fácilmente en GPU mediante la librería Cufttp.
+
+Clase 10 u 11:
+
+Q:
+¿Cuál es la diferencia entre generar nros random en CPU y GPU?
+A:
+
+Q:
+¿Cuáles son los problemas asociados a usar GPU?
+
+A:
