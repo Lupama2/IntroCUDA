@@ -95,3 +95,6 @@ PROBAR
 
 
 Usar make para compilar. Dentro creo que tiene las instrucciones extras que se le pasan al compilador para que corra sin problemas
+
+
+Duda CUDA: Preguntar por qué no puedo correr mi código
