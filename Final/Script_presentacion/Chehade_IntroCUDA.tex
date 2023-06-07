@@ -228,6 +228,33 @@ Se asume que las colisiones con la pared son elásticas, considerando la misma c
 \end{enumerate}
 \textcolor{blue}{Poner los items anteriores. Poner "loop sobre partículas" y "loop temporal" en un color distinto.}
 
+Los procesos son
+\begin{itemize}
+    \item Condiciones iniciales
+    \item Loop temporal
+    \begin{itemize}
+        \item Método de Verlet
+        \begin{itemize}
+            \item Cálculo de fuerzas
+            \item Integración de posiciones y velocidades
+        \end{itemize}
+        \item Rebotes
+        \item Corrección de velocidades
+    \end{itemize}
+\ned{itemize}
+
+
+Condiciones iniciales
+Loop temporal
+Método de Verlet
+Cálculo de fuerzas
+Integración de posiciones y velocidades
+Rebotes
+Corrección de velocidades
+
+
+
+
 Tenemos muchos loops que podrían ser paralelizables
 
 \section{Versiones del código en serie y en paralelo}
@@ -299,6 +326,131 @@ Me gustaría hacer una "historia" de cómo fui cambiando de una versión a la ot
 
 -Animación o gráfico de los resultados
 \textcolor{red}{Hacer una animación de la densidad radial en el tiempo comparándola con la solución de Bunkin para N grande}
+
+
+
+Todo profiling hacerlo con N = 2000
+
+En una CPU con
+Información de la CPU:
+Nombre: AMD Ryzen 7 4700U with Radeon Graphics
+Arquitectura: X86_64
+Frecuencia: [1400000000, 0]
+Núcleos físicos: 8
+
+py_cpu:
+
+Para hacer profiling:
+jupyter nbconvert py_cpu_simulacion_de_particulas.ipynb --to python
+python -m cProfile -o py_cpu_simulacion_de_particulas.profile py_cpu_simulacion_de_particulas.py
+snakeviz py_cpu_simulacion_de_particulas.profile
+
+Del total
+85.15 para hacer el loop temporal
+13.83 lo usa el compilador para importar módulos
+0.77 para guardar los archivos txt
+
+Del 85.15:
+85.10 se usa para el método de Verlet, el restante para los rebotes
+
+Del 85.10:
+82.38 se usa para calcular las fuerzas, el restante para integrar posiciones y velocidades
+
+-------------
+CPU: AMD Ryzen 7 4700U with Radeon Graphics
+Tiempo total: 100
+
+P1 Importar módulos: 13.83
+P2 Condiciones iniciales: 0.
+P3 Loop temporal: 85.15
+S1 Método de Verlet: 85.10
+SS1 Cálculo de fuerzas: 82.38
+SS2 Integración de posiciones y velocidades: 85.10-82.38
+S2 Rebotes: 0.025
+S3 Corrección de velocidades: 0.025
+P4 Guardado de datos: 0.77
+-----------------
+
+
+
+
+py_gpu:
+Para hacer profiling:
+jupyter nbconvert py_gpu_simulacion_de_particulas.ipynb --to python
+python -m cProfile -o py_gpu_simulacion_de_particulas.profile py_gpu_simulacion_de_particulas.py
+snakeviz py_gpu_simulacion_de_particulas.profile
+
+Información de la CPU:
+Nombre: Intel(R) Xeon(R) CPU @ 2.00GHz
+Arquitectura: X86_64
+Frecuencia: [2000144000, 0]
+Núcleos físicos: 2
+Device 0 Name: Tesla T4
+
+cargar librerías: 55.45 %
+condiciones iniciales: 24.68%
+avanzo_dt: 18.87 %
+save_txt: 0.52 %
+
+dentro de avanzo_dt
+metodo_Verlet: 2.89%
+where: 14.84 % para encontrar dónde el cociente del cálculo de fuerzas se hace nulo
+compilación de cupy: 12.44 %
+correccion_Temperatura: 0.41%
+restante otros procesos
+
+
+-------------
+CPU: Intel(R) Xeon(R) CPU @ 2.00GHz
+GPU: Nvidia Tesla T4
+
+P1 Importar módulos: 55.45
+P2 Condiciones iniciales: 24.68
+P3 Copias HtoD and DtoH: 0.
+P4 Loop temporal: 18.87
+S1 Método de Verlet: 2.89
+SS1 Cálculo de fuerzas: 2.47
+SS2 Integración de posiciones y velocidades: 2.89 - 2.47
+S2 Rebotes: 14.84
+S3 Corrección de velocidades: 0.41
+P5 Guardado de datos: 0.52
+-------------
+
+¿Cómo hago profiling de un código escrito en C++? Quiero obtener un archivo del tipo .profile
+
+
+
+cpp_cpu
+
+Para hacer profiling:
+
+1. Compilar usando la opción-pg
+2. Ejecutarlo
+g++ -O3 -pg cpp_cpu_funciones.cpp cpp_cpu_simulacion_de_particulas.cpp -o cpp_cpu_simulacion_de_particulas
+
+cpp_cpu_funciones.exe
+
+gprof cpp_cpu_simulacion_de_particulas gmon.out > cpp_cpu_simulacion_de_particulas_profiling.txt
+
+
+
+P1 Importar módulos:
+P2 Condiciones iniciales:
+P3 Loop temporal:
+S1 Método de Verlet:
+SS1 Cálculo de fuerzas:
+SS2 Integración de posiciones y velocidades:
+S2 Rebotes:
+S2 Corrección de velocidades:
+P4 Guardado de datos:
+-------------
+
+
+
+
+
+
+
 
 
 \bibliography{Chehade_IntroCUDA.bib}
