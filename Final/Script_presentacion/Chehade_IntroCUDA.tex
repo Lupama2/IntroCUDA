@@ -56,10 +56,10 @@ bookmarksopen=false,
 \renewcommand{\tablename}{Tabla}
 \renewcommand{\date}{Fecha}
 
-\graphicspath{ {C:/Users/lupam/Mi unidad/Pablo Chehade/Instituto Balseiro (IB)/Laboratorio Avanzado/Informe/Figures/} } %Para importar imágenes desde una carpeta
-
+\graphicspath{ {C:/Users/lupam/OneDrive/Escritorio/GitHub/IntroCUDA/Final/Script_presentacion/Figures/} } %Para importar imágenes desde una carpeta
 
 \usepackage[bottom]{footmisc} %para que las notas al pie aparezcan en la misma página
+
 
 
 
@@ -278,9 +278,23 @@ Me gustaría hacer una "historia" de cómo fui cambiando de una versión a la ot
     \item Pude hacerlo en todos los pasos salvo en el cálculo de los rebotes, ahí usé loops de python
     \item En particular, la consecuencia de lo anterior fue tener que calcular una matriz de fuerzas
     \item \textcolor{blue}{Gráfico de la matriz de fuerzas}
-    \item \textcolor{blue}{Gráfico de tiempo de cómputo y análisis}
+    \item \textcolor{red}{Análisis del tiempo de cómputo}
     \item \textcolor{red}{Profiling. Ver qué CPU estoy usando} y análisis
 \end{itemize}
+
+
+\begin{figure}[h]
+    \includegraphics[clip=true,width=\columnwidth]{pixel-compare}
+    \caption{Gráfico de tiempo de cómputo}
+     \label{fig:pixels}
+\end{figure}
+
+\begin{figure}[h]
+    \includegraphics[clip=true,width=\columnwidth]{pixel-compare}
+    \caption{}
+     \label{fig:pixels}
+\end{figure}
+
 
 \subsection{Versión 2: Python en paralelo}
 
@@ -448,12 +462,12 @@ Además, se empleó una GPU NVIDIA GeForce GTX TITAN X
 % P2 Condiciones iniciales: 0
 % P3 Loop temporal: 100 - 0.14-0.13
 % S1 Método de Verlet: 100-18.94-1.03-0.14-0.13
-% S1 Cálculo de fuerzas: 77.73
+% SS1 Cálculo de fuerzas: 77.73
 % SS2 Integración de posiciones y velocidades: 1.06 + 0.99
 % S2 Rebotes: 1.03
 % S3 Corrección de velocidades: 18.94
-% S4 Copia DtoH y HtoD: 0.14+0.13
-% P4 Guardado de datos: 0
+% P4 Copia DtoH y HtoD: 0.14+0.13
+% P5 Guardado de datos: 0
 
 % API Calls
 
@@ -473,12 +487,12 @@ Además, se empleó una GPU NVIDIA GeForce GTX TITAN X
 % P2 Condiciones iniciales: 0 
 % P3 Loop temporal: 100-0.61
 % S1 Método de Verlet: 100-22.53-9.71-0.61
-% S1 Cálculo de fuerzas: 49.89
+% SS1 Cálculo de fuerzas: 49.89
 % SS2 Integración de posiciones y velocidades: 8.75+7.51
 % S2 Rebotes: 9.71
 % S3 Corrección de velocidades: 22.53
-% S4 Copia DtoH y HtoD: 0.61
-% P4 Guardado de datos: 0
+% P4 Copia DtoH y HtoD: 0.61
+% P5 Guardado de datos: 0
 
 % API Calls
 
