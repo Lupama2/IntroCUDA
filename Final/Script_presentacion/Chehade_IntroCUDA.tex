@@ -279,20 +279,20 @@ Me gustaría hacer una "historia" de cómo fui cambiando de una versión a la ot
     \item En particular, la consecuencia de lo anterior fue tener que calcular una matriz de fuerzas
     \item \textcolor{blue}{Gráfico de la matriz de fuerzas}
     \item \textcolor{red}{Análisis del tiempo de cómputo}
-    \item \textcolor{red}{Profiling. Ver qué CPU estoy usando} y análisis
+    \item \textcolor{red}{Análisis de profiling}
 \end{itemize}
 
 
 \begin{figure}[h]
-    \includegraphics[clip=true,width=\columnwidth]{pixel-compare}
+    \includegraphics[clip=true,width=\columnwidth]{tiempo_de_computo_vs_N_py_cpu.png}
     \caption{Gráfico de tiempo de cómputo}
-     \label{fig:pixels}
+     \label{fig:tiempo_de_computo_vs_N_py_cpu}
 \end{figure}
 
 \begin{figure}[h]
-    \includegraphics[clip=true,width=\columnwidth]{pixel-compare}
+    \includegraphics[clip=true,width=\columnwidth]{Profiling de py_cpu.png}
     \caption{}
-     \label{fig:pixels}
+     \label{fig:Profiling de py_cpu}
 \end{figure}
 
 
@@ -301,40 +301,117 @@ Me gustaría hacer una "historia" de cómo fui cambiando de una versión a la ot
 \begin{itemize}
     \item Sólo intercambié numpy por cupy como para demostrar qué speed-up uno podría obtener con un código 
     \item \textcolor{blue}{Escribir ''import numpy as np'' $\rightarrow$ ''import cupy as np''}
-    \item \textcolor{blue}{Gráfico de tiempo de cómputo (py_cu y py_gpu)}
-    \item \textcolor{blue}{Gráfico de speed-up respecto a py_cpu}
     \item \textcolor{red}{Profiling. Ver qué CPU y GPU estoy usando} y análisis
 \end{itemize}
+
+\begin{figure}[h]
+    \includegraphics[clip=true,width=\columnwidth]{tiempo_de_computo_vs_N_py_all.png}
+    \caption{Gráfico de tiempo de cómputo (py_cu y py_gpu)}
+     \label{fig:tiempo_de_computo_vs_N_py_all}
+\end{figure}
+
+\begin{figure}[h]
+    \includegraphics[clip=true,width=\columnwidth]{py_cpu_vs_py_gpu.png}
+    \caption{Gráfico de speed-up respecto a py_cpu}
+     \label{fig:py_cpu_vs_py_gpu}
+\end{figure}
+
+\begin{figure}[h]
+    \includegraphics[clip=true,width=\columnwidth]{Profiling de py_gpu.png}
+    \caption{}
+     \label{fig:Profiling de py_gpu}
+\end{figure}
+
+
+
 
 \subsection{Versión 3: C++ en serie}
 
 \begin{itemize}
     \item Usé los loops de C++ para todos los cálculos. Las fuerzas ya no se calculan mediante una matriz.
     \item \textcolor{blue}{Poner la función de fuerzas}
-    \item \textcolor{blue}{Gráfico de tiempo de cómputo (py_cu, py_gpu y cpp_cpu)}
-    \item \textcolor{blue}{Gráfico de speed-up respecto a py_cpu}
-    \item \textcolor{red}{Profiling. Ver qué CPU estoy usando} y análisis
+    \item \textcolor{red}{Ver qué CPU estoy usando} y análisis
 \end{itemize}
+
+
+\begin{figure}[h]
+    \includegraphics[clip=true,width=\columnwidth]{tiempo_de_computo_vs_N_py_all_and_cpp_cpu.png}
+    \caption{Gráfico de tiempo de cómputo (py_cu, py_gpu y cpp_cpu)}
+     \label{fig:tiempo_de_computo_vs_N_py_all_and_cpp_cpu}
+\end{figure}
+
+
+\begin{figure}[h]
+    \includegraphics[clip=true,width=\columnwidth]{py_cpu_vs_cpp_cpu.png}
+    \caption{Gráfico de speed-up respecto a py_cpu}
+     \label{fig:py_cpu_vs_cpp_cpu}
+\end{figure}
+
+\begin{figure}[h]
+    \includegraphics[clip=true,width=\columnwidth]{Profiling de cpp_cpu.png}
+    \caption{}
+     \label{fig:Profiling de cpp_cpu}
+\end{figure}
+
 
 \subsection{Versión 4: C++ en paralelo v1}
 
 \begin{itemize}
     \item Usé kernels para hacer cada una de las cuentas, un blocksize de \textcolor{red}{256?} y solo hice copias al inicio y al final de la evolución
     \item \textcolor{blue}{Volver a poner los items al inicio de "implementación" y poner al lado de cada item una flecha y la declaración de los kernels}
-    \item \textcolor{blue}{Gráfico de tiempo de cómputo (cpp_cpu, cpp_gpu_v1)}
-    \item \textcolor{blue}{Gráfico de speed-up respecto a cpp_cpu}
-    \item \textcolor{red}{Profiling. Ver qué CPU y GPU estoy usando} y análisis
+    \item \textcolor{blue}{}
+    \item \textcolor{blue}{}
+    \item \textcolor{red}{. Ver qué CPU y GPU estoy usando} y análisis
 \end{itemize}
+
+\begin{figure}[h]
+    \includegraphics[clip=true,width=\columnwidth]{tiempo_de_computo_vs_N_cpp_cpu_and_gpu_v1.png}
+    \caption{Gráfico de tiempo de cómputo (cpp_cpu, cpp_gpu_v1)}
+     \label{fig:tiempo_de_computo_vs_N_cpp_cpu_and_gpu_v1}
+\end{figure}
+
+
+\begin{figure}[h]
+    \includegraphics[clip=true,width=\columnwidth]{cpp_cpu_vs_cpp_gpu_v1.png}
+    \caption{Gráfico de speed-up respecto a cpp_cpu}
+     \label{fig:cpp_cpu_vs_cpp_gpu_v1}
+\end{figure}
+
+
+\begin{figure}[h]
+    \includegraphics[clip=true,width=\columnwidth]{Profiling de cpp_gpu_v1.png}
+    \caption{Profiling}
+     \label{fig:Profiling de cpp_gpu_v1}
+\end{figure}
+
+
+
 
 \subsection{Versión 5: C++ en paralelo v2}
 
 \begin{itemize}
     \item usé shared-memory
     \item \textcolor{blue}{Poner la sección en la que usé shared memory}
-    \item textcolor{blue}{Gráfico de tiempo de cómputo (cpp_cu, cpp_gpu_v1 y cpp_gpu_v2)}
-    \item \textcolor{blue}{Gráfico de speed-up respecto a cpp_cpu}
-    \item \textcolor{red}{Profiling. Ver qué CPU y GPU estoy usando} y análisis
+    \item \textcolor{red}{. Ver qué CPU y GPU estoy usando} y análisis
 \end{itemize}
+
+\begin{figure}[h]
+    \includegraphics[clip=true,width=\columnwidth]{tiempo_de_computo_vs_N_cpp_all.png}
+    \caption{Gráfico de tiempo de cómputo (cpp_cu, cpp_gpu_v1 y cpp_gpu_v2)}
+     \label{fig:tiempo_de_computo_vs_N_cpp_all}
+\end{figure}
+
+\begin{figure}[h]
+    \includegraphics[clip=true,width=\columnwidth]{cpp_cpu_vs_cpp_gpu_v2.png}
+    \caption{Gráfico de speed-up respecto a cpp_cpu}
+     \label{fig:cpp_cpu_vs_cpp_gpu_v2}
+\end{figure}
+
+\begin{figure}[h]
+    \includegraphics[clip=true,width=\columnwidth]{Profiling de cpp_gpu_v2.png}
+    \caption{Profiling}
+     \label{fig:Profiling de cpp_gpu_v2}
+\end{figure}
 
 \section{Resultados}
 
