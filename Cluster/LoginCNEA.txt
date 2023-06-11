@@ -1,0 +1,4 @@
+Si necesita conectarse a internet, por ejemplo para descargar software, necesita autenticarse (desde el frontend) con su cuenta de CNEA/IB en https://login.cnea.gob.ar:4100. Puede usar https://github.com/giox069/pyfauths/ para hacerlo desde la linea de comando. Ejemplo: python pyfauths.py login.cnea.gob.ar login cnea.ar usuario contraseña
+
+
+python pyfauths.py login.cnea.gob.ar login cnea.ar pablo.chehade 42127Lupama$
