@@ -433,24 +433,58 @@ cpp_cpu_funciones.exe
 gprof cpp_cpu_simulacion_de_particulas gmon.out > cpp_cpu_simulacion_de_particulas_profiling.txt
 
 
-
-P1 Importar módulos:
-P2 Condiciones iniciales:
-P3 Loop temporal:
-S1 Método de Verlet:
-SS1 Cálculo de fuerzas:
-SS2 Integración de posiciones y velocidades:
-S2 Rebotes:
-S2 Corrección de velocidades:
-P4 Guardado de datos:
--------------
+Las pruebas se realizaron en una CPU AMD Phenom II X4 955 con una arquitectura de 64 bits. Esta CPU tiene 4 núcleos, con una frecuencia de reloj de 3.21 GHz.
 
 
+cpp_gpu_v1
 
+Las pruebas se realizaron en una CPU AMD Phenom II X4 955 con una arquitectura de 64 bits. Esta CPU tiene 4 núcleos, con una frecuencia de reloj de 3.21 GHz.
 
+Además, se empleó una GPU NVIDIA GeForce GTX TITAN X
 
+% GPU Activities
 
+% P1 Importar módulos: 0
+% P2 Condiciones iniciales: 0
+% P3 Loop temporal: 100 - 0.14-0.13
+% S1 Método de Verlet: 100-18.94-1.03-0.14-0.13
+% S1 Cálculo de fuerzas: 77.73
+% SS2 Integración de posiciones y velocidades: 1.06 + 0.99
+% S2 Rebotes: 1.03
+% S3 Corrección de velocidades: 18.94
+% S4 Copia DtoH y HtoD: 0.14+0.13
+% P4 Guardado de datos: 0
 
+% API Calls
+
+% P1: cudaMalloc 97.46%
+% cudaDeviceSynchronize: 1.93 %
+% cudaLaunchKernel: 0.37%
+
+cpp_cpu_v2
+
+Las pruebas se realizaron en una CPU AMD Phenom II X4 955 con una arquitectura de 64 bits. Esta CPU tiene 4 núcleos, con una frecuencia de reloj de 3.21 GHz.
+
+Además, se empleó una GPU NVIDIA GeForce GTX TITAN X
+
+% GPU Activities
+
+% P1 Importar módulos: 0
+% P2 Condiciones iniciales: 0 
+% P3 Loop temporal: 100-0.61
+% S1 Método de Verlet: 100-22.53-9.71-0.61
+% S1 Cálculo de fuerzas: 49.89
+% SS2 Integración de posiciones y velocidades: 8.75+7.51
+% S2 Rebotes: 9.71
+% S3 Corrección de velocidades: 22.53
+% S4 Copia DtoH y HtoD: 0.61
+% P4 Guardado de datos: 0
+
+% API Calls
+
+% P1: cudaMalloc: 99.06
+% cudaDeviceSynchronize: 0.32 
+% cudaLaunchKernel: 0.38
 
 
 \bibliography{Chehade_IntroCUDA.bib}
