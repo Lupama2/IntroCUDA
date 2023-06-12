@@ -301,12 +301,12 @@ Me gustaría hacer una "historia" de cómo fui cambiando de una versión a la ot
 \begin{itemize}
     \item Esta versión fue implementada en un Notebook de Python. Se empleó este lenguaje porque inicialmente el problema no estaba bien definido y tuve que hacer mucho prototyping
     \item Para hacer los cálculos de forma eficiente, decidí usar numpy en lugar de los loops de python.
-    \item \textcolor{blue}{Ejemplo de código en el que usé numpy: asignación de las condiciones iniciales}
+    \item \textcolor{blue}{CÓDIGO: asignación de las condiciones iniciales}
     \item Pude hacerlo en todos los pasos salvo en el cálculo de los rebotes, ahí usé loops de python
     \item En particular, la consecuencia de lo anterior fue tener que calcular una matriz de fuerzas
     \item \textcolor{blue}{Gráfico de la matriz de fuerzas}
-    \item \textcolor{red}{Análisis del tiempo de cómputo}
-    \item \textcolor{red}{Análisis de profiling}
+    \item Solo pudimos ejecutar el código hasta un máximo de $N = 1000$ porque para tamaños superiores le toma más de 20' en ejecutar.
+    \item Vemos que a mayor tamaño, mayor tiempo de cómputo, lo cual es razonable porque estamos utilizando una CPU. Si vemos hacemos profiling del código, vemos que gran parte del tiempo se dedica al loop temporal.
 \end{itemize}
 
 
@@ -328,8 +328,12 @@ Me gustaría hacer una "historia" de cómo fui cambiando de una versión a la ot
 \begin{itemize}
     \item Sólo intercambié numpy por cupy como para demostrar qué speed-up uno podría obtener con un código 
     \item \textcolor{blue}{Escribir ''import numpy as np'' $\rightarrow$ ''import cupy as np''}
-    \item \textcolor{red}{Profiling. Ver qué CPU y GPU estoy usando} y análisis
+    \item Si analizamos el tiempo de cómputo con el tamaño del sistema, vemos que inicialmente tarda más el código paralelizado, pero cuando el tamaño aumenta se mantiene constante el tiempo de cómputo. Cuando se consideran alrededor de 1000 partículas, la GPU serializa y el tiempo de cómputo comienza a crecer, pero aún así manteniéndose órdenes de magnitud por debajo del código en serie.
+    \item Si analizamos el speed-up definido como el tiempo de cómputo del código en serie vs el del código en paralelo, observamos que para un tamaño de $N = 1000$ partículas, tenemos un seed-up del $x100$ 
+    \item Si vemos el profiling realizado para $N = 100$, vemos que gran parte del tiempo está destinado a importar módulos y a la compilación.
 \end{itemize}
+
+
 
 \begin{figure}[h]
     \includegraphics[clip=true,width=\columnwidth]{tiempo_de_computo_vs_N_py_all.png}
@@ -355,23 +359,19 @@ Me gustaría hacer una "historia" de cómo fui cambiando de una versión a la ot
 \subsection{Versión 3: C++ en serie}
 
 \begin{itemize}
-    \item Usé los loops de C++ para todos los cálculos. Las fuerzas ya no se calculan mediante una matriz.
+    \item Usé los loops de C++ para todos los cálculos. Las fuerzas ya no se calculan mediante una matriz, sino como un doble loop sobre pares de partículas.
     \item \textcolor{blue}{Poner la función de fuerzas}
     \item \textcolor{red}{Ver qué CPU estoy usando} y análisis
+    \item El tiempo de cómputo con C++ se reduce considerablemente respecto a Python. Pero al igual que este aumenta con el tamaño $N$ del sistema. Si vemos el profiling sin tener en cuenta los tiempos de compilación, vemos que casi el 100 \% del tiempo de cómputo se debe al loop temporal y, en particular, al cálculo de fuerzas. Con el código de python paralelizado habíamos logrado disminuir este tiempo de cómputo, veamos si podemos hacerlo nuevamente pero en C++.
 \end{itemize}
+
+
 
 
 \begin{figure}[h]
     \includegraphics[clip=true,width=\columnwidth]{tiempo_de_computo_vs_N_py_all_and_cpp_cpu.png}
     \caption{Gráfico de tiempo de cómputo (py_cu, py_gpu y cpp_cpu)}
      \label{fig:tiempo_de_computo_vs_N_py_all_and_cpp_cpu}
-\end{figure}
-
-
-\begin{figure}[h]
-    \includegraphics[clip=true,width=\columnwidth]{py_cpu_vs_cpp_cpu.png}
-    \caption{Gráfico de speed-up respecto a py_cpu}
-     \label{fig:py_cpu_vs_cpp_cpu}
 \end{figure}
 
 \begin{figure}[h]
@@ -384,11 +384,15 @@ Me gustaría hacer una "historia" de cómo fui cambiando de una versión a la ot
 \subsection{Versión 4: C++ en paralelo v1}
 
 \begin{itemize}
-    \item Usé kernels para hacer cada una de las cuentas, un blocksize de \textcolor{red}{256?} y solo hice copias al inicio y al final de la evolución
+    \item Usé kernels para hacer cada una de las cuentas, un blocksize de 256 y solo hice copias al inicio y al final de la evolución.
+    \item Hice un kernel por cada sección de la evolución, es decir, un kernel para calcular las fuerzas, un par para aplicar el método de Verlet, otro para los rebotes y otro para corregir las velocidades. Todos son kernels simples que paralelizan un único loop, salvo el que calcula las fuerzas que paraleliza 2 loops. Veamos este en más detalle
+    \item \textcolor{blue}{CÓDIGO: kernel bodyForce}
     \item \textcolor{blue}{Volver a poner los items al inicio de "implementación" y poner al lado de cada item una flecha y la declaración de los kernels}
-    \item \textcolor{blue}{}
-    \item \textcolor{blue}{}
+    \item En cuanto al tiempo de cómputo vemos el mismo comportamiento que en python: en la versión en serie el tiempo de cómputo aumenta con el tamaño del sistema, mientras que en la versión en paralelo, al inicio se mantiene constante y mayor a la versión en serie y luego comienza a serializar.
+    \item Analizando el speed-up, vemos que con un tamaño del orden de $2000$ partículas, tenemos un speed-up de $x500$
+    \item Si hacemos profiling del código y sin considerar el tiempo de compilación, vemos que al igual que antes toda la ejecución radica en el loop temporal, pero a diferencia de antes, se logró disminuir el tiempo de cómputo relativo del cálculo de fuerzas
     \item \textcolor{red}{. Ver qué CPU y GPU estoy usando} y análisis
+    \item 
 \end{itemize}
 
 \begin{figure}[h]
@@ -417,8 +421,10 @@ Me gustaría hacer una "historia" de cómo fui cambiando de una versión a la ot
 \subsection{Versión 5: C++ en paralelo v2}
 
 \begin{itemize}
-    \item usé shared-memory
-    \item \textcolor{blue}{Poner la sección en la que usé shared memory}
+    \item Esta versión en paralelo admite una última optimización, que se basa en usar memoria compartida.
+    \item \textcolor{blue}{CÓDIGO: bodyForce}
+    \item Vemos que el tiempo de cómputo es consistentemente menor que la última versión, obteniendo un speed-up ligeramente mayor. Además, vemos que el error asociado al tiempo de cómputo aumenta, \textcolor{red}{Cómo explico esto?}
+    \item Analizando el profiling, vemos que logramos disminuir aún más el tiempo de cómputo del cálculo de fuerzas.
     \item \textcolor{red}{. Ver qué CPU y GPU estoy usando} y análisis
 \end{itemize}
 
@@ -441,6 +447,8 @@ Me gustaría hacer una "historia" de cómo fui cambiando de una versión a la ot
 \end{figure}
 
 \section{Resultados}
+
+Veamos cómo es la evolución de la densidad
 
 -Animación o gráfico de los resultados
 \textcolor{red}{Hacer una animación de la densidad radial en el tiempo comparándola con la solución de Bunkin para N grande}
