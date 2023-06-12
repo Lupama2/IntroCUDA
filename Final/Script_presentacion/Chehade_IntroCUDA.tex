@@ -151,7 +151,16 @@ Script de la presentación de CUDA
 \section{Introducción}
 El objetivo del proyecto es simular la dinámica de un gas de N electrones contenido en un recinto circular de radio $R_0$. En particular, nos interesa conocer las propiedades del gas en el equilibrio.
 
-\textcolor{blue}{Figura representativa: algunos electrones adentro de un círculo de radio $R_0$. Hacerlo con python y con el mismo formato que los resultados}
+\begin{figure}[h]
+    \includegraphics[clip=true,width=\columnwidth]{electrones_en_caja.png}
+    \caption{Figura representativa: algunos electrones adentro de un círculo de radio $R_0$. Hacerlo con python y con el mismo formato que los resultados.}
+     \label{fig:electrones_en_caja}
+\end{figure}
+
+
+
+
+
 
 \section{Motivación}
 El estudio de estas propiedades permite analizar el proceso de evolución de una avalancha de electrones generada en una cavidad rodeada por una fuente de electrones.
@@ -172,6 +181,12 @@ Para modelar el gas de electrones hay 2 opciones:
 \end{enumerate}
 
 
+% \begin{figure}[h]
+%     \includegraphics[clip=true,width=\columnwidth]{pixel-compare}
+%     \caption{}
+%      \label{fig:pixels}
+% \end{figure}
+
 \subsection{Ecuaciones de movimiento}
 
 \ptitle{Ecuaciones}
@@ -182,6 +197,9 @@ ecuaciones de movimiento dadas por la ley de Newton y la ley de Lorentz, adimens
     \item \textcolor{red}{Ecuaciones adimensionalizadas}
 \end{itemize}
 
+\[\]
+
+
 \ptitle{Método de Verlet}
 \textcolor{red}{Ecuaciones del método}
 (método simpléctico? conservativo)
@@ -190,7 +208,9 @@ ecuaciones de movimiento dadas por la ley de Newton y la ley de Lorentz, adimens
 
 Como condición inicial se parte de $N$ electrones en posiciones y velocidades aleatorias con distribución uniforme, ambas entre $0$ y $1$ por la adimensionalización elegida.
 
-\textcolor{blue}{$r_{0,i} = $ distribución uniforme entre 0 y 1. Lo mismo para $v$}
+
+\[$r_{0,i,x}, r_{0,i,y} \sim U(0, 1)$ \forall i \]
+\[$v_{0,i,x}, v_{0,i,y} \sim U(0, 1)$ \forall i \]
 
 \subsection{Corección de Temperatura}
 
@@ -200,8 +220,12 @@ El sistema es conservativo, de modo que dadas las condiciones iniciales la energ
 
 Se asume que las colisiones con la pared son elásticas, considerando la misma como una "pared blanda". Esto significa que durante la evolución la partícula invierte su velocidad si atraviesa la pared, pero no se refleja su posición. Esto es útil para evitar discontinuidades en la energía total del sistema.
 
-\textcolor{blue}{Figura del rebote. Creo que Chule había hecho un dibujo en su apunte}
 
+\begin{figure}[h]
+    \includegraphics[clip=true,width=0.4\columnwidth]{rebote_blando.png}
+    \caption{Figura del rebote blando}
+     \label{fig:rebote_blando}
+\end{figure}
 
 \section{Método Numérico}
 
