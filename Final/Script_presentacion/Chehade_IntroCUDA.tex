@@ -149,7 +149,7 @@ Script de la presentación de CUDA
 
 
 \section{Introducción}
-El objetivo del proyecto es simular la dinámica de un gas de N electrones contenido en un recinto circular de radio $R_0$. En particular, nos interesa conocer las propiedades del gas en el equilibrio.
+El objetivo del proyecto es simular la dinámica de un gas de N electrones contenido en un recinto circular 2D de radio $R_0$. En particular, nos interesa conocer las propiedades del gas en el equilibrio.
 
 \begin{figure}[h]
     \includegraphics[clip=true,width=\columnwidth]{electrones_en_caja.png}
@@ -194,17 +194,27 @@ ecuaciones de movimiento dadas por la ley de Newton y la ley de Lorentz, adimens
 
 
 \begin{itemize}
-    \item \textcolor{red}{Ecuaciones adimensionalizadas}
+    \item \textcolor{blue}{Ecuaciones adimensionalizadas}
 \end{itemize}
 
-\textcolor{red}{Si cada paso es independiente de los demás, entonces puedo hacer estadística del mismo N usando los pasos de tiempo}
-\textcolor{red}{De alguna manera debería "checkear" el resultado. Supongo que lo haré observando la conservación de la energía}
+\[\frac{d\vec{r}_i}{dt} = \vec{v}_i\]
+\[\frac{d\vec{v}_i}{dt} = \sum_{i = 0}^{N-1} \alpha \frac{\vec{r}_i - \vec{r}_j}{\left | \vec{r}_i - \vec{r}_j \right |^3} \]
+
+\[\alpha = \frac{e^2}{mR_0v_0^2}\]
+
+\[v_0 = \sqrt{\frac{2KT}{m}} \]
 
 
-\textcolor{red}{Comentario: Tratar de entender por qué no anda el código de shared_memory y ahora sí: antes estaba haciendo un for sobre partículas que no existían}
+\[\lambda = \sqrt{\frac{N}{\sum_i |\vec{v}_i|^2}}\]
+
+\[\vec{v}_{new} = \lambda \vec{v}\]
+
+
 
 \ptitle{Método de Verlet}
 \textcolor{red}{Ecuaciones del método}
+
+
 (método simpléctico? conservativo)
 
 \subsection{Condiciones iniciales}
@@ -212,8 +222,8 @@ ecuaciones de movimiento dadas por la ley de Newton y la ley de Lorentz, adimens
 Como condición inicial se parte de $N$ electrones en posiciones y velocidades aleatorias con distribución uniforme, ambas entre $0$ y $1$ por la adimensionalización elegida.
 
 
-\[$r_{0,i,x}, r_{0,i,y} \sim U(0, 1)$ \forall i \]
-\[$v_{0,i,x}, v_{0,i,y} \sim U(0, 1)$ \forall i \]
+\[r_{0,i,x}, r_{0,i,y} \sim U(0, 1) \forall i \]
+\[v_{0,i,x}, v_{0,i,y} \sim U(0, 1) \forall i \]
 
 \subsection{Corección de Temperatura}
 
@@ -235,7 +245,6 @@ Se asume que las colisiones con la pared son elásticas, considerando la misma c
 \section{Implementación}
 
 
-
 \ptitle{¿Qué pasos debe hacer nuestro código para calcular la evolución del gas de electrones?}
 
 \begin{enumerate}
@@ -254,6 +263,11 @@ Se asume que las colisiones con la pared son elásticas, considerando la misma c
     \end{enumerate}
 \end{enumerate}
 \textcolor{blue}{Poner los items anteriores. Poner "loop sobre partículas" y "loop temporal" en un color distinto.}
+
+Método de Verlet
+\[\bold{r}^{n+1}_i = \bold{r}^n_i + \Delta t \bold{v}^n_i  + \frac{1}{2} \bold{F}^n_i \Delta t ^2\]
+\[\bold{v}^{n+1}_i = \bold{v}^n_i + \frac{1}{2} (\bold{F}^{n+1}_i + \bold{F}^{n}_i)\]
+
 
 Los procesos son
 \begin{itemize}
@@ -284,6 +298,14 @@ Corrección de velocidades
 
 Tenemos muchos loops que podrían ser paralelizables
 
+
+
+\textcolor{red}{Si cada paso es independiente de los demás, entonces puedo hacer estadística del mismo N usando los pasos de tiempo}
+\textcolor{red}{De alguna manera debería ''checkear'' el resultado. Supongo que lo haré observando la conservación de la energía}
+
+
+\textcolor{red}{Comentario: Tratar de entender por qué no anda el código de shared memory y ahora sí: antes estaba haciendo un for sobre partículas que no existían}
+
 \section{Versiones del código en serie y en paralelo}
 *Contar cada versión por separado.
 \textcolor{blue}{Hacer una tabla traspuesta en la que diga}
@@ -309,6 +331,16 @@ Me gustaría hacer una "historia" de cómo fui cambiando de una versión a la ot
     \item Vemos que a mayor tamaño, mayor tiempo de cómputo, lo cual es razonable porque estamos utilizando una CPU. Si vemos hacemos profiling del código, vemos que gran parte del tiempo se dedica al loop temporal.
 \end{itemize}
 
+La matriz de fuerzas es
+\[
+F = \begin{pmatrix}
+    0 & F_{1,2} & F_{1,3} & \cdots & F_{1,N} \\
+    F_{2,1} & 0 & F_{2,3} & \cdots & F_{2,N} \\
+    F_{3,1} & F_{3,2} & 0 & \cdots & F_{3,N} \\
+    \vdots  & \vdots  & \vdots  & \ddots & \vdots  \\
+    F_{N,1} & F_{N,2} & F_{N,3} & \cdots & 0
+\end{pmatrix}
+\]
 
 \begin{figure}[h]
     \includegraphics[clip=true,width=\columnwidth]{tiempo_de_computo_vs_N_py_cpu.png}
