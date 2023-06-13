@@ -645,6 +645,52 @@ Además, se empleó una GPU NVIDIA GeForce GTX TITAN X
 % cudaLaunchKernel: 0.38
 
 
+\section{Comentarios extras de lo que hice/no hice}
+
+
+
+Agregar
+*Justificación de py_gpu cte para N chico y mayor que py_cpu
+Siempre hay un costo asociado a la creación de los kernels y otras inicializaciones que se amortizan solo si el tamaño es grande
+*Verificar que corra en el cluster
+*Releer el pdf del speech
+
+*Nuevo profiling de cpp_gpu considerando copias HtoD y DtoH
+
+*Graficar evolución con cpp_gpu_v2
+*Graficar el promedio de la densidad radial en el equilibrio
+*Fijarme si los resultados de cpp_gpu_v2 son correctos
+
+
+
+
+
+Si yo quisiera simular 10^4 partículas, necesitaría Por lo tanto, "0x28000" en decimal es igual a 164840 bytes para alojar las partículas. Pero el máximo de la shared memory es Por lo tanto, "0xc000" en decimal es igual a 49152
+
+¿Qué sol existe?
+dynamic shared memory
+
+Muy complicado
+
+Otro modo: To handle this case, the simulation would need to be split into multiple runs of the kernel function, with each run processing a subset of the particles
+
+Podría si no iterar en cada kernel, pero ya estoy trabajando en serie
+
+
+CUDA:
+
+
+Profiling
+Determinar qué hay que medir
+
+*Serie C++
+.Buscar con ChatGPT cómo hacer profiling
+
+*Paralelo C++
+.Buscar con ChatGPT cómo hacer profiling
+
+
+
 \bibliography{Chehade_IntroCUDA.bib}
 
 \end{document}
