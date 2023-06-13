@@ -1,0 +1,24 @@
+Numba en el cluster
+
+Por si no lo vieron en el chat hace algunas semanas se los copio aqui.
+NUMBA instalado en el cluster. van instrucciones.
+
+
+Copiense la carpeta /share/apps/icnpg/clases/Clases_numba para encontrar el ejemplo de la epidemia (el mismo que vimos en colab).
+
+
+Si van a usar cupy y numba combinados, van a necesitar crear un entorno en conda. A mi me funciono esto:
+
+conda create --name myenv cupy numba
+
+
+por eso en el jobGPU van a ver la linea
+
+
+conda activate myenv
+
+
+antes de ejecutar el programa como siempre
+
+
+python codigo_con_numba_cupy.py
