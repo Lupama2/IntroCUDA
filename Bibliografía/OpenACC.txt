@@ -1,0 +1,16 @@
+hola, 
+
+Lo que hicimos hoy en clase es, en gran parte, exactamente lo que explican en este video. 
+
+https://www.youtube.com/watch?v=_do2Dwa29EM
+
+Los códigos están en /share/apps/icnpg/clases/Clases_openacc/jacobi/cudacast/
+No olviden activar el modulo de HPC de nvidia cuando prueben los ejemplos
+
+module load nvhpc-21.9
+
+Lo que le agregamos al ejemplo de cudaCast es la compilación en CPU-multicore, y vimos que daba ya una linda aceleración en CPU.
+
+Como es tan fácil acelerar un poco con openACC yo los aliento a experimentar un poco con algun programa serian en C/C++ o fortran que tengan porai...
+
+Saludos!

@@ -1,0 +1,2 @@
+Curso pra Numba y CUDA
+https://github.com/numba/nvidia-cuda-tutorial?authuser=0
