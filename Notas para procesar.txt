@@ -98,3 +98,8 @@ Usar make para compilar. Dentro creo que tiene las instrucciones extras que se l
 
 
 Duda CUDA: Preguntar por qué no puedo correr mi código
+
+
+Tuve un problema durante la presentación final. El código corría en la carpeta de origen en el cluster pablo.chehade/IntroCUDA/Final/ pero no corría en la carpeta pablo.chehade/ICNPG2023_Chehade/. Yo había copiado exactamente los archivos de una carpeta a la otra mediante Windows. Resulta que en la copia hay caracteres que no se copian correctamente y por eso hay que usar la copia de Linux en la terminal con "cd". El argumento "-r" indica que la copia se haga sobre todo el contenido (copia recursiva)
+cp /home/pablo.chehade/IntroCUDA/Final/job_cpp_gpu_v1 .
+El "." indica que se copie en el directorio en el que me encuentro actualmente
