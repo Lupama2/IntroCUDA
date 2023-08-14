@@ -7,10 +7,7 @@ Martes y Miércoles de 9 a 13 en el aula 3 de Egipcios
 Usuario: ICNPG
 Contraseña: gpgpu2023
 
-Cluster
-ip: 10.73.25.223
-Usuario: pablo.chehade
-Contraseña: 5NElCjSEafnjsaxT9r5C//
+
 
 TEST
 
